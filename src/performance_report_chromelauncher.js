@@ -4,19 +4,20 @@ import Assert from "assert";
 import urls_data from '../Data/urls.js';
 import config from 'lighthouse/core/config/lr-desktop-config.js';
 
-const performanceReport = async (mobile) => {
+
+const performanceReport_chromelauncher = async (mobile) => {
     const browser = await createBrowser();
     let k = 1;
     // let page = null;
     for(let urls of urls_data){
-        // page = (await browser.pages())[0];
+        // const page = (await browser.pages())[0];
         // await page.goto(urls.url, { waitUntil: 'networkidle0' });
         const result = await createReportWithBrowser(
         urls.url,
         browser,
         mobile ? null : config
         );
-        Assert(result.report, "No report returned"); // report: The HTML report as a string.
+        Assert(result.report, "No report returned");
         if(mobile)
             fs.writeFileSync(`./LightHouse_Reports/Mobile_Reports/report${k}.html`, result.report, "utf-8", (err) => {
                 if(err)
@@ -30,7 +31,7 @@ const performanceReport = async (mobile) => {
         k++;
     }
     // await page.close();
-    await browser.close();
+    await browser.kill;
 }
 
-export default performanceReport;
+export default performanceReport_chromelauncher;
